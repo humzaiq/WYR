@@ -12,9 +12,9 @@ class UnansweredListing extends React.Component {
 
     const sortedQuestions = [...allQuestions].sort((a,b) => a.timestamp - b.timestamp);
 
-    console.log('sortedArray', sortedQuestions )
+    // console.log('sortedArray', sortedQuestions )
 
-    console.log('allQuestions', allQuestions )
+    // console.log('allQuestions', allQuestions )
 
 
     const { users } = this.props

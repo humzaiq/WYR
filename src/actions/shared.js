@@ -1,12 +1,15 @@
 import { getUsers } from './users'
 import { authenticateUser, logoutUser } from './authenticatedUser'
 import { getQuestions, createQuestion } from './questions'
+import { receiveVote } from './votes'
 import { getInitialData,
         saveQuestion,
         saveQuestionAnswer }
 from '../utils/api'
 
-const AUTHED_ID = null;
+// const AUTHED_ID = null;
+const AUTHED_ID = 'sarahedo';
+
 
 export function handleInitialData () {
     return (dispatch) => {
@@ -51,11 +54,6 @@ export function handleQuestionSubmission (optionOne, optionTwo, authenticatedUse
 
 
 export function handleVoteSubmission(selectedOption, questionId, authenticatedUser) {
-    // Make sure selectedOption is valid
-    if (typeof selectedOption === 'undefined') {
-        throw new Error('selectedOption is undefined');
-    }
-
     // Define the vote object
     const vote = {
         authedUser: authenticatedUser,
@@ -65,12 +63,15 @@ export function handleVoteSubmission(selectedOption, questionId, authenticatedUs
 
     return async (dispatch) => {
         try {
-            const response = await saveQuestionAnswer(vote)
-            console.log("this is the response", response)
-                dispatch(updateQuestionState(response))
+            saveQuestionAnswer(vote)
+            .then (() => {
+                dispatch(receiveVote(vote))
+            })
+
+            // console.log("this is the response", response)
         }
         catch (error) {
-            console.error("Error:", error);
+            console.error("Error ---:", error);
         }
     };
 }

@@ -1,34 +1,32 @@
-import React from 'react'
-import { Routes, Route, Link, Form, useHistory } from "react-router-dom"
+import React, { useState } from 'react'
+import { Routes, Route, Link, Form, useHistory, useNavigate, withRouter, useSearchParams } from "react-router-dom"
 import { connect } from 'react-redux';
 import { handleQuestionSubmission } from '../actions/shared';
 
-class CreatePoll extends React.Component {
+function CreatePoll (props) {
 
- state = {
-    optionOne: '',
-    optionTwo: '',
- }
+    const [optionOne, setOptionOne] = useState('');
+    const [optionTwo, setOptionTwo] = useState('');
 
- render() {
 
-    const { dispatch } = this.props
+    const navigate = useNavigate();
+
+    const { dispatch } = props
+
+    const clearState = () => {
+        setOptionOne('');
+        setOptionTwo('');
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(handleQuestionSubmission(
-            this.state.optionOne,
-            this.state.optionTwo,
-            this.props.authenticatedUser))
+            optionOne,
+            optionTwo,
+            props.authenticatedUser));
             clearState();
-            // this.props.navigate('/home/unansweredListing');
+            navigate('/home/unansweredListing')
     }
-
-   const clearState = () => {
-        this.setState({
-            optionOne: '',
-            optionTwo: '',
-        });
-      };
 
       return (
         <div className="container">
@@ -40,28 +38,28 @@ class CreatePoll extends React.Component {
                             <div className="mb-4 text-start">
                                 <label htmlFor="exampleInputPassword1" className="form-label text-left">Enter Option 1</label>
                                 <input
-                                    onChange={e => this.setState({optionOne: e.target.value})}
-                                    value={this.state.optionOne}
+                                    onChange={e => setOptionOne(e.target.value)}
+                                    value={optionOne}
                                     type="text"
+                                    id="optionOneInput"
                                     className="form-control"/>
                             </div>
                             <div className="mb-4 text-start">
                                 <label htmlFor="exampleInputPassword1" className="form-label text-left">Enter Option 2</label>
                                 <input
-                                    onChange={e => this.setState({optionTwo: e.target.value})}
-                                    value={this.state.optionTwo}
+                                    onChange={e => setOptionTwo(e.target.value)}
+                                    value={optionTwo}
+                                    id="optionTwoInput"
                                     type="text"
                                     className="form-control"/>
                             </div>
                             <div className="p-4 d-flex justify-content-center">
-                                    <button
-                                        type="submit"
-                                        onClick={this.clearState}
-                                        className="btn btn-primary"
-                                        // onClick={onNavigate}
-                                        disabled={this.state.optionOne === "" || this.state.optionTwo === ""}>
-                                            Submit
-                                    </button>
+                                <button
+                                    type="submit"
+                                    className="btn btn-primary"
+                                    disabled={optionOne === "" || optionTwo === ""}>
+                                        Submit
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -69,9 +67,7 @@ class CreatePoll extends React.Component {
             </div>
         </div>
       )
-    }
-  }
-
+}
 
 function mapStateToProps (authenticatedUser) {
     console.log("this is mapstatetoprops", authenticatedUser)
@@ -79,5 +75,3 @@ function mapStateToProps (authenticatedUser) {
 }
 
 export default connect(mapStateToProps)(CreatePoll);
-
-

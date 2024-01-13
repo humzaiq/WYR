@@ -6,20 +6,39 @@ import { Routes, Route, Link, useLocation, useNavigate, withRouter, useParams, N
 function AnsweredPage(props) {
 
      const { id } = useParams()
-     const { questions } = props;
-    //  console.log("props -- ", questions )
+     const { questions, users, authenticatedUser } = props;
+
      const question = questions[id];
-    //   console.log("question -- ", question)
+     const author = users[question.author];
+
+     console.log("question ", question)
+
+
+     const checkVoteOptionOne = question.optionOne.votes.includes(authenticatedUser) ?
+        <span className="badge rounded-pill bg-info ms-2">Your answer</span> :
+        null;
+
+        console.log("checkVoteOptionOne", checkVoteOptionOne)
+
+     const checkVoteOptionTwo = question.optionTwo.votes.includes(authenticatedUser) ?
+        <span className="badge rounded-pill bg-info ms-2">Your answer</span> :
+        null;
+
+        console.log("checkVoteOptionTwo", checkVoteOptionTwo)
 
      const totalVotes = question.optionOne.votes.length + question.optionTwo.votes.length
-    // console.log(totalVotes, "totalVotes")
-    // console.log(optionOnePercentage, "optionOnePercentage")
+     const optionOnePercentage = totalVotes === 0 ? 0
+                                : (question.optionOne.votes.length / totalVotes * 100).toFixed(0)
 
-     const optionOnePercentage = question.optionOne.votes.length / totalVotes * 100
+     const optionTwoPercentage = totalVotes === 0 ? 0
+                                : (question.optionTwo.votes.length / totalVotes * 100).toFixed(0)
 
-     const optionTwoPercentage = question.optionTwo.votes.length / totalVotes * 100
-    //  console.log(optionTwoPercentage, "optionTwoPercentage")
-    // console.log({width:`${optionTwoPercentage}%`}, "`${optionTwoPercentage}%`")
+     console.log("totalVotes", totalVotes)
+     console.log("optionOnePercentage", optionOnePercentage)
+     console.log("optionTwoPercentage", optionTwoPercentage)
+
+
+
 
     return (
             <>
@@ -27,8 +46,8 @@ function AnsweredPage(props) {
                     <div className= "card unanswered-card p-3">
                         <div className='unanswered-card-top'>
                             <div className ="unanswered-card-top-image">
-                                <img className="mx-auto d-block" src={require('../assets/john.jpeg')} />
-                                <p>{question.author}</p>
+                                <img className="mx-auto d-block" src={author.avatarURL.slice(1)} />
+                                <p>{author.name}</p>
                             </div>
                             <div className ="unanswered-card-top-title fs-3" >
                                 Would you rather?
@@ -38,14 +57,20 @@ function AnsweredPage(props) {
                             <div className="answered-option-selection">
                                 <div className="selected-option ">
                                     <div className="percentage-opt1" style={{width:`${optionOnePercentage}%`}}></div>
-                                    <div className="option-text"><span className="fw-bolder p-3">{optionOnePercentage}% voted:</span><span>{question.optionOne.text}</span></div>
+                                    <div className="option-text">
+                                        <span className="fw-bolder p-3">{optionOnePercentage}% voted:</span>
+                                        <span>{question.optionOne.text}</span>
+                                        {checkVoteOptionOne}
+                                    </div>
                                 </div>
                             </div>
                             <div className="answered-option-selection">
                                 <div className="selected-option">
                                     <div className="percentage-opt1" style={{width:`${optionTwoPercentage}%`}}></div>
-                                    <div className="option-text"><span className="fw-bolder p-3">{optionTwoPercentage}% voted:</span><span>{question.optionTwo.text}</span>
-                                    <span className="badge rounded-pill bg-info ms-2">Your answer</span>
+                                    <div className="option-text">
+                                        <span className="fw-bolder p-3">{optionTwoPercentage}% voted:</span>
+                                        <span>{question.optionTwo.text}</span>
+                                        {checkVoteOptionTwo}
                                     </div>
                                 </div>
                             </div>
@@ -57,23 +82,10 @@ function AnsweredPage(props) {
 }
 
 
-function mapStateToProps ({questions}) {
-    console.log('questions from map function ', questions )
-    return { questions }
+function mapStateToProps ({questions, users, authenticatedUser}) {
+    console.log('questions222',{questions, users, authenticatedUser} )
+    return { questions, users, authenticatedUser }
 }
 
 export default connect(mapStateToProps)(AnsweredPage);
 
-
-// const mapStateToProps = ({ authedUser, tweets, users }, props) => {
-//     const { id } = props.router.params;
-
-//     return {
-//       id,
-//       replies: !tweets[id]
-//         ? []
-//         : tweets[id].replies.sort(
-//             (a, b) => tweets[b].timestamp - tweets[a].timestamp
-//           ),
-//     };
-//   };
