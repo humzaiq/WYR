@@ -1,11 +1,13 @@
 import { RECEIVE_VOTE } from '../actions/votes'
 
 
-export default function receiveVote(state = { questions: {} }, action) {
+export default function receiveVote(state = {} , action) {
 
     switch(action.type) {
         case RECEIVE_VOTE:
             console.log("this is from reducer fo receive vote ", action.vote)
+            console.log("this is from reducer state ", state)
+
             const { qid, answer, authedUser } = action.vote;
 
             const updatedQuestions = {
@@ -14,7 +16,7 @@ export default function receiveVote(state = { questions: {} }, action) {
                         ...state.questions[qid],
                         [answer]: {
                             ...state.questions[qid][answer],
-                            votes:state.questions[qid].votes.concat([authedUser])
+                            votes:state.questions[qid][answer].votes.concat([authedUser])
                         }
                     }
                 }

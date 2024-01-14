@@ -20,5 +20,6 @@ export function saveQuestion(question) {
 }
 
 export function saveQuestionAnswer(vote) {
+    console.log("this is from the api90909090", vote)
     return _saveQuestionAnswer(vote)
 }

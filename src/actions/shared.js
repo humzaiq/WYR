@@ -7,9 +7,7 @@ import { getInitialData,
         saveQuestionAnswer }
 from '../utils/api'
 
-// const AUTHED_ID = null;
-const AUTHED_ID = 'sarahedo';
-
+const AUTHED_ID = null;
 
 export function handleInitialData () {
     return (dispatch) => {
@@ -61,18 +59,16 @@ export function handleVoteSubmission(selectedOption, questionId, authenticatedUs
         answer: selectedOption,
     };
 
-    return async (dispatch) => {
-        try {
-            saveQuestionAnswer(vote)
-            .then (() => {
-                dispatch(receiveVote(vote))
-            })
+    return (dispatch) => {
+        saveQuestionAnswer(vote)
+        .then (() => {
+            dispatch(receiveVote(vote));
 
+        })
             // console.log("this is the response", response)
-        }
-        catch (error) {
+        .catch (error => {
             console.error("Error ---:", error);
-        }
+        })
     };
 }
 

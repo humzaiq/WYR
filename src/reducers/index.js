@@ -9,5 +9,5 @@ export default combineReducers({
     users,
     questions,
     authenticatedUser,
-    votes
+    votes,
 })

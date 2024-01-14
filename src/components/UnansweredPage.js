@@ -14,21 +14,22 @@ function UnansweredPage(props) {
             dispatch } = props;
 
         const question = questions[id]
-        const author = users[question.author];
+        const author = users[question.author] || {} ;
 
         const handleChange = (e) => {
             setSelectedOption(e.target.value);
         }
 
-        const handleSubmit = async (e) => {
+        const handleSubmit = (e) => {
             e.preventDefault();
-
+            console.log("UnanswereedPage - Selected Option", selectedOption)
             try {
-                await dispatch(handleVoteSubmission(
-                    selectedOption,
+                dispatch(handleVoteSubmission(
+                    authenticatedUser,
                     question.id,
-                    authenticatedUser
+                    selectedOption,
                 ));
+
                 navigate(`/AnsweredPage/${question.id}`)
                 // console.error("/AnsweredPage/${question.id}", `/AnsweredPage/${question.id}`);
 

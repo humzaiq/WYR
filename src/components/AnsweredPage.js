@@ -9,20 +9,22 @@ function AnsweredPage(props) {
      const { questions, users, authenticatedUser } = props;
 
      const question = questions[id];
+    //  const author = users[question.author] || {} ;
+
      const author = users[question.author];
 
      console.log("question ", question)
 
 
      const checkVoteOptionOne = question.optionOne.votes.includes(authenticatedUser) ?
-        <span className="badge rounded-pill bg-info ms-2">Your answer</span> :
-        null;
+                    <span className="badge rounded-pill bg-info ms-2">Your answer</span> :
+                    null;
 
         console.log("checkVoteOptionOne", checkVoteOptionOne)
 
      const checkVoteOptionTwo = question.optionTwo.votes.includes(authenticatedUser) ?
-        <span className="badge rounded-pill bg-info ms-2">Your answer</span> :
-        null;
+                    <span className="badge rounded-pill bg-info ms-2">Your answer</span> :
+                    null;
 
         console.log("checkVoteOptionTwo", checkVoteOptionTwo)
 
@@ -36,9 +38,6 @@ function AnsweredPage(props) {
      console.log("totalVotes", totalVotes)
      console.log("optionOnePercentage", optionOnePercentage)
      console.log("optionTwoPercentage", optionTwoPercentage)
-
-
-
 
     return (
             <>
