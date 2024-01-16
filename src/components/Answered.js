@@ -24,8 +24,8 @@ class Answered extends React.Component {
                         null;
 
                 const totalVotes = question.optionOne.votes.length + question.optionTwo.votes.length
-                const optionOnePercentage = question.optionOne.votes.length / totalVotes * 100
-                const optionTwoPercentage = question.optionTwo.votes.length / totalVotes * 100
+                const optionOnePercentage = (question.optionOne.votes.length / totalVotes * 100).toFixed(0)
+                const optionTwoPercentage = (question.optionTwo.votes.length / totalVotes * 100).toFixed(0)
 
 
                     return (
@@ -34,6 +34,7 @@ class Answered extends React.Component {
                                     <div className ="unanswered-card-top-image">
                                         <img className="mx-auto d-block" src={author.avatarURL.slice(1)} />
                                         <p>{author.name}</p>
+                                        <p>Total Votes:{totalVotes}</p>
                                     </div>
                                     <div className ="unanswered-card-top-title fs-3" >
                                         Would you rather?

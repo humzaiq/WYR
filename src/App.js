@@ -13,18 +13,21 @@ import UnansweredPage from './components/UnansweredPage'
 import AnsweredPage from './components/AnsweredPage'
 import Answered from './components/Answered';
 import { handleInitialData } from './actions/shared';
+import PageNotFoundError from './components/PageNotFoundError';
 
-class App extends Component{
+class App extends React.Component{
 
   componentDidMount() {
     this.props.dispatch(handleInitialData())
   }
 
   render() {
+
     return (
       <div className="App">
         <NavBar />
-        <Routes>
+        {this.props.authenticatedUser !== null ?
+          <Routes>
           <Route path="/" element={<Login />} />
             <Route path="/home/" element={<Home />} >
               <Route index element={<UnansweredListing />} />
@@ -34,11 +37,19 @@ class App extends Component{
             <Route path="/unansweredPage/:id" element={<UnansweredPage />} />
             <Route path="/AnsweredPage/:id" element={<AnsweredPage />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
-            <Route path="/createpoll" element={<CreatePoll />} />
-        </Routes>
+            <Route path="/add" element={<CreatePoll />} />
+            <Route path='*' element ={<PageNotFoundError/>} />
+          </Routes>
+          :
+          <Login />}
       </div>
     );
   }
 }
 
-export default connect()(App);
+function mapStateToProps ({authenticatedUser}) {
+  return { authenticatedUser }
+}
+
+export default connect(mapStateToProps)(App);
+

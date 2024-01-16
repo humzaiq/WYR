@@ -10,7 +10,7 @@ function Home() {
     <div className="container">
         <div className="home-container d-flex justify-content-center">
             <div className="card col-md-9">
-                <h1> Enter unanswered polls</h1>
+                <h1>Enter unanswered polls</h1>
                 <ul className="nav nav-pills p-4">
                     <li className="nav-item">
                         <NavLink

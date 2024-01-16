@@ -35,6 +35,7 @@ function AnsweredPage(props) {
                             <div className ="unanswered-card-top-image">
                                 <img className="mx-auto d-block" src={author.avatarURL.slice(1)} />
                                 <p>{author.name}</p>
+                                <p>Total Votes:{totalVotes}</p>
                             </div>
                             <div className ="unanswered-card-top-title fs-3" >
                                 Would you rather?

@@ -47,7 +47,7 @@ function NavBar(props) {
                                         </NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <NavLink to="/createpoll">
+                                        <NavLink to="/add">
                                         <div className="nav-link">Create Poll</div>
                                         </NavLink>
                                     </li>

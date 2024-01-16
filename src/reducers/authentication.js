@@ -3,6 +3,7 @@ import { LOGOUT_USER } from '../actions/authenticatedUser'
 
 
 export default function authenticatedUser (state = null, action) {
+
     switch(action.type) {
         case AUTHENTICATE_USER:
             return action.id;
