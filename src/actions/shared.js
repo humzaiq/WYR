@@ -1,4 +1,4 @@
-import { getUsers } from './users'
+import { getUsers, saveQuestionForUser, addVoteToUser } from './users'
 import { authenticateUser, logoutUser } from './authenticatedUser'
 import { getQuestions, createQuestion } from './questions'
 import { receiveVote } from './votes'
@@ -39,30 +39,39 @@ export function handleQuestionSubmission (optionOne, optionTwo, authenticatedUse
         optionTwoText: optionTwo,
         author: authenticatedUser,
     }
-    console.log("this is the question object", question);
+    console.log("this is the question object", authenticatedUser);
 
     return (dispatch) => {
             return saveQuestion(question)
                 .then((savedQuestion) => {
                     console.log('Value returned from saveQuestion:', savedQuestion);
-                    dispatch(createQuestion(savedQuestion));
+                    dispatch(createQuestion(savedQuestion))
+                    dispatch(saveQuestionForUser(savedQuestion));
             })
         }
     }
 
 
-export function handleVoteSubmission(selectedOption, questionId, authenticatedUser) {
-    // Define the vote object
+// export function handleVoteSubmission(selectedOption, questionId, authenticatedUser) {
+    export function handleVoteSubmission({ authedUser, answer, qid }) {
+
+    console.log("selectedOption, questionId, authenticatedUser", authedUser, answer, qid)
+
     const vote = {
-        authedUser: authenticatedUser,
-        qid: questionId,
-        answer: selectedOption,
+        authedUser,
+        qid,
+        answer,
     };
+
+    console.log("ffffff", vote)
+
 
     return (dispatch) => {
         saveQuestionAnswer(vote)
-        .then (() => {
-            dispatch(receiveVote(vote));
+        .then ((e) => {
+            console.log("eeeeeee", vote)
+            dispatch(addVoteToUser(vote))
+            dispatch(receiveVote(vote))
 
         })
             // console.log("this is the response", response)
@@ -71,35 +80,3 @@ export function handleVoteSubmission(selectedOption, questionId, authenticatedUs
         })
     };
 }
-
-
-
-// export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
-//     return new Promise((res, rej) => {
-//       setTimeout(() => {
-//         users = {
-//           ...users,
-//           [authedUser]: {
-//             ...users[authedUser],
-//             answers: {
-//               ...users[authedUser].answers,
-//               [qid]: answer
-//             }
-//           }
-//         }
-
-//         questions = {
-//           ...questions,
-//           [qid]: {
-//             ...questions[qid],
-//             [answer]: {
-//               ...questions[qid][answer],
-//               votes: questions[qid][answer].votes.concat([authedUser])
-//             }
-//           }
-//         }
-
-//         res()
-//       }, 500)
-//     })
-//   }
