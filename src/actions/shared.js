@@ -1,7 +1,6 @@
 import { getUsers, saveQuestionForUser, addVoteToUser } from './users'
 import { authenticateUser, logoutUser } from './authenticatedUser'
-import { getQuestions, createQuestion } from './questions'
-import { receiveVote } from './votes'
+import { getQuestions, createQuestion, receiveVote} from './questions'
 import { getInitialData,
         saveQuestion,
         saveQuestionAnswer }
@@ -33,48 +32,34 @@ export function handleUserLogout (userId) {
 }
 
 export function handleQuestionSubmission (optionOne, optionTwo, authenticatedUser) {
-
     const question = {
         optionOneText: optionOne,
         optionTwoText: optionTwo,
         author: authenticatedUser,
     }
-    console.log("this is the question object", authenticatedUser);
 
     return (dispatch) => {
             return saveQuestion(question)
                 .then((savedQuestion) => {
-                    console.log('Value returned from saveQuestion:', savedQuestion);
                     dispatch(createQuestion(savedQuestion))
                     dispatch(saveQuestionForUser(savedQuestion));
             })
         }
     }
 
-
-// export function handleVoteSubmission(selectedOption, questionId, authenticatedUser) {
     export function handleVoteSubmission({ authedUser, answer, qid }) {
-
-    console.log("selectedOption, questionId, authenticatedUser", authedUser, answer, qid)
-
     const vote = {
         authedUser,
         qid,
         answer,
     };
 
-    console.log("ffffff", vote)
-
-
     return (dispatch) => {
         saveQuestionAnswer(vote)
         .then ((e) => {
-            console.log("eeeeeee", vote)
             dispatch(addVoteToUser(vote))
             dispatch(receiveVote(vote))
-
         })
-            // console.log("this is the response", response)
         .catch (error => {
             console.error("Error ---:", error);
         })

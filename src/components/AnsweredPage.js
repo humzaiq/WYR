@@ -9,24 +9,16 @@ function AnsweredPage(props) {
      const { questions, users, authenticatedUser } = props;
 
      const question = questions[id];
-    //  const author = users[question.author] || {} ;
-
      const author = users[question.author];
-
-     console.log("question ", question)
-
 
      const checkVoteOptionOne = question.optionOne.votes.includes(authenticatedUser) ?
                     <span className="badge rounded-pill bg-info ms-2">Your answer</span> :
                     null;
 
-        console.log("checkVoteOptionOne", checkVoteOptionOne)
-
      const checkVoteOptionTwo = question.optionTwo.votes.includes(authenticatedUser) ?
                     <span className="badge rounded-pill bg-info ms-2">Your answer</span> :
                     null;
 
-        console.log("checkVoteOptionTwo", checkVoteOptionTwo)
 
      const totalVotes = question.optionOne.votes.length + question.optionTwo.votes.length
      const optionOnePercentage = totalVotes === 0 ? 0
@@ -34,10 +26,6 @@ function AnsweredPage(props) {
 
      const optionTwoPercentage = totalVotes === 0 ? 0
                                 : (question.optionTwo.votes.length / totalVotes * 100).toFixed(0)
-
-     console.log("totalVotes", totalVotes)
-     console.log("optionOnePercentage", optionOnePercentage)
-     console.log("optionTwoPercentage", optionTwoPercentage)
 
     return (
             <>
@@ -82,9 +70,7 @@ function AnsweredPage(props) {
 
 
 function mapStateToProps ({questions, users, authenticatedUser}) {
-    console.log('questions222',{questions, users, authenticatedUser} )
     return { questions, users, authenticatedUser }
 }
 
 export default connect(mapStateToProps)(AnsweredPage);
-

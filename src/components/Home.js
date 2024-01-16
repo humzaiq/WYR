@@ -16,7 +16,6 @@ function Home() {
                         <NavLink
                             to="unansweredListing"
                             className={`nav-link ${classActive}`}
-                            // activeClassName="active"
                             >
                             <div>Unanswered</div>
                         </NavLink>
@@ -25,7 +24,6 @@ function Home() {
                         <NavLink
                             to="answered"
                             className="nav-link"
-                            // activeClassName="active"
                             >
                             <div>Answered</div>
                         </NavLink>

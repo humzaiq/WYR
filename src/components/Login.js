@@ -33,8 +33,8 @@ function Login(props) {
                                     <select onChange={handleOnChange}
                                         className="form-select"
                                         value={userValue}
-                                        defaultValue={'Please select a user'}
                                         aria-label="Default select example">
+                                         <option value="" disabled>Select User</option>
                                             { users.filter(user => {
                                                 return user.name !== null
                                                 })

@@ -15,7 +15,6 @@ export default function users (state = {}, action) {
         }
 
         case SAVE_QUESTION_FOR_USER: {
-
             const authedUser = action.question.author
             const qid = action.question.id
 
@@ -28,28 +27,21 @@ export default function users (state = {}, action) {
             }
         }
 
-
         case ADD_VOTE_TO_USER: {
             const { qid, answer, authedUser } = action.vote;
 
-        // console.log("this is the SACE_QIUESTOPIN_FOR USER", authedUser, qid)
-        console.log("test test test", state)
-        console.log("tthis is the actoin from add vote to user", action)
-
-
-            // const updatedUsers = {
-            //     ...state.users,
-            //     [authedUser]: {
-            //         ...state.users[authedUser].answers,
-            //         [qid]: answer
-            //     }
-            // }
             return {
                 ...state,
-                // users: updatedUsers
+                [authedUser]: {
+                    ...state[authedUser],
+                    answers: {
+                        ...state[authedUser].answers,
+                        [qid]: answer
+                    }
+                }
             }
-
         }
+
         default:
             return state
     }

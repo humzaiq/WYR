@@ -5,18 +5,10 @@ import { Routes, Route, Link, NavLink } from "react-router-dom";
 
 
 class UnansweredListing extends React.Component {
-
     render() {
 
     let allQuestions = Object.values(this.props.questions);
-
     const sortedQuestions = [...allQuestions].sort((a,b) => a.timestamp - b.timestamp);
-
-    // console.log('sortedArray', sortedQuestions )
-
-    // console.log('allQuestions', allQuestions )
-
-
     const { users } = this.props
 
     return (
@@ -61,20 +53,17 @@ class UnansweredListing extends React.Component {
 
 
 function mapStateToProps ({questions, users, authenticatedUser}) {
-    console.log('questions000',{questions, users, authenticatedUser} )
 
     function filterQuestionsByUser(questions, userToCheck) {
         return Object.fromEntries(
           Object.entries(questions).filter(([key, value]) =>
                 !value.optionOne.votes.includes(userToCheck) &&
                 !value.optionTwo.votes.includes(userToCheck)
-                // value.author !== userToCheck
         ));
     }
 
     const userToCheck = authenticatedUser;
     const filteredObject = filterQuestionsByUser(questions, userToCheck)
-    console.log('mapstatetoprops filter', filteredObject)
 
     return { questions: filteredObject,
              users,

@@ -5,11 +5,7 @@ import { handleUserLogout } from '../actions/shared';
 
 function NavBar(props) {
         const authedUser =  props.authenticatedUser;
-        // console.log("authedUser", authedUser)
-
         const users = props.users
-        // console.log("users", users)
-
         const usersName = (authedUser && users[authedUser]) ?
                           users[authedUser].name
                           : '';
@@ -18,16 +14,14 @@ function NavBar(props) {
                             users[authedUser].avatarURL
                             : '';
 
-        // console.log("usersName", usersName)
 
         const dispatch = useDispatch();
         const navigate = useNavigate();
 
         const handleLogout = (userId) => {
-            // console.log("I was clicked")
             dispatch(handleUserLogout(userId));
             navigate('/');
-            }
+        }
 
         return (
                 <div>

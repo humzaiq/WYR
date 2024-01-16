@@ -1,4 +1,8 @@
-import { GET_QUESTIONS, CREATE_QUESTION, GET_ID } from '../actions/questions'
+import {
+    GET_QUESTIONS,
+    CREATE_QUESTION,
+    GET_ID,
+    RECEIVE_VOTE } from '../actions/questions'
 
 
 export default function questions (state = {}, action) {
@@ -10,7 +14,6 @@ export default function questions (state = {}, action) {
             }
 
         case CREATE_QUESTION:
-            console.log("create_question reducer", action )
             const newQuestion = action.question
 
             return {
@@ -23,7 +26,26 @@ export default function questions (state = {}, action) {
                 ...state,
                 ...action.id
             }
+
+        case RECEIVE_VOTE:{
+            const { qid, answer, authedUser} = action.vote
+
+            return {
+                ...state,
+                [qid]: {
+                    ...state[qid],
+                    [answer]: {
+                        ...state[qid][answer],
+                        votes: state[qid][answer].votes.concat([authedUser])
+                    }
+                }
+            }
+        }
+
         default:
             return state
     }
 }
+
+
+

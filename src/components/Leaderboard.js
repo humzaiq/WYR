@@ -4,8 +4,6 @@ import { Routes, Route, Link } from "react-router-dom"
 
 
 class Leaderboard extends React.Component {
-
-
     render() {
         const { users } = this.props;
 
@@ -17,7 +15,6 @@ class Leaderboard extends React.Component {
                         <h1>Top users</h1>
                     </div>
                     {users.map( (user,i) => {
-                        console.log("user info", user.avatarURL)
                         const currentItemNumber = i + 1;
 
                         return (
@@ -64,4 +61,4 @@ function mapStateToProps ({users}) {
       return { users: sortedUsers };
 }
 
-export default connect(mapStateToProps) (Leaderboard);
+export default connect(mapStateToProps)(Leaderboard);

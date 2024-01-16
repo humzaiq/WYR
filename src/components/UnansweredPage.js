@@ -22,7 +22,6 @@ function UnansweredPage(props) {
 
         const handleSubmit = (e) => {
             e.preventDefault();
-            console.log("UnanswereedPage - Selected Option", selectedOption)
 
         const vote = {
             authedUser: authenticatedUser,
@@ -34,12 +33,9 @@ function UnansweredPage(props) {
                 dispatch(handleVoteSubmission(
                     vote
                 ));
-
                 navigate(`/AnsweredPage/${question.id}`)
-                // console.error("/AnsweredPage/${question.id}", `/AnsweredPage/${question.id}`);
 
             } catch (error) {
-                console.error("Error:", error);
                 navigate(`/AnsweredPage/${question.id}`)
             }
         }

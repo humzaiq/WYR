@@ -24,8 +24,8 @@ function CreatePoll (props) {
             optionOne,
             optionTwo,
             props.authenticatedUser));
-            clearState();
-            navigate('/home/unansweredListing')
+        clearState();
+        navigate('/home/unansweredListing')
     }
 
       return (
@@ -70,7 +70,6 @@ function CreatePoll (props) {
 }
 
 function mapStateToProps (authenticatedUser) {
-    console.log("this is mapstatetoprops", authenticatedUser)
     return authenticatedUser ;
 }
 
