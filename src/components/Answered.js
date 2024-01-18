@@ -8,7 +8,7 @@ class Answered extends React.Component {
 
     const { users, authenticatedUser } = this.props
     const answeredQuestions = Object.values(this.props.questions)
-    const sortedQuestions = [...answeredQuestions].sort((a,b) => a.timestamp - b.timestamp);
+    const sortedQuestions = [...answeredQuestions].sort((a,b) => b.timestamp - a.timestamp);
 
     return (
             <>

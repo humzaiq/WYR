@@ -8,7 +8,7 @@ class UnansweredListing extends React.Component {
     render() {
 
     let allQuestions = Object.values(this.props.questions);
-    const sortedQuestions = [...allQuestions].sort((a,b) => a.timestamp - b.timestamp);
+    const sortedQuestions = [...allQuestions].sort((a,b) => b.timestamp - a.timestamp);
     const { users } = this.props
 
     return (
@@ -36,7 +36,7 @@ class UnansweredListing extends React.Component {
                                         <span className= 'fs-5 ps-3'>{question.optionTwo.text}</span>
                                     </div>
                                 </div>
-                                <Link to={`/UnansweredPage/${question.id}`}>
+                                <Link to={`/questions/${question.id}`}>
                                     <button type="submit" className="btn btn-primary">
                                         Answer it
                                     </button>

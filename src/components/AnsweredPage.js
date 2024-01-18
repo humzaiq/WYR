@@ -11,6 +11,11 @@ function AnsweredPage(props) {
      const question = questions[id];
      const author = users[question.author];
 
+     if (!question) {
+        navigate('/error');
+        return null;
+    }
+
      const checkVoteOptionOne = question.optionOne.votes.includes(authenticatedUser) ?
                     <span className="badge rounded-pill bg-info ms-2">Your answer</span> :
                     null;

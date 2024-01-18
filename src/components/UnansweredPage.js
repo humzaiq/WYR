@@ -2,9 +2,11 @@ import React, {useEffect, useState} from 'react'
 import { connect } from 'react-redux'
 import { useNavigate, useParams } from "react-router-dom"
 import { handleVoteSubmission } from '../actions/shared'
+import  AnsweredPage from './AnsweredPage'
 
 function UnansweredPage(props) {
         const [selectedOption, setSelectedOption] = useState('');
+
         const { id } = useParams();
         const navigate = useNavigate();
         const {
@@ -14,6 +16,12 @@ function UnansweredPage(props) {
             dispatch } = props;
 
         const question = questions[id]
+
+        if (!question) {
+            navigate('/error');
+            return null;
+        }
+
         const author = users[question.author] || {} ;
 
         const handleChange = (e) => {
@@ -30,17 +38,15 @@ function UnansweredPage(props) {
         }
 
             try {
-                dispatch(handleVoteSubmission(
-                    vote
-                ));
-                navigate(`/AnsweredPage/${question.id}`)
+                dispatch(handleVoteSubmission(vote));
 
             } catch (error) {
-                navigate(`/AnsweredPage/${question.id}`)
+                // navigate(`/AnsweredPage/${question.id}`)
             }
         }
 
         return (
+            <>
             <div className='unanswered-container col-8 mx-auto justify-content-center'>
                 <div className= "card unanswered-card p-3">
                     <div className= 'unanswered-card-top'>
@@ -81,15 +87,14 @@ function UnansweredPage(props) {
                                 </div>
                             </div>
                             <br />
-                            {/* <Link to={`/AnsweredPage/${question.id}`}> */}
-                                <button type="submit" className="btn btn-primary">
-                                    Submit
-                                </button>
-                            {/* </Link> */}
+                            <button type="submit" className="btn btn-primary">
+                                Submit
+                            </button>
                         </form>
                     </div>
                 </div>
             </div>
+        </>
         )
     }
 
