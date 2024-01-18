@@ -1,4 +1,4 @@
-import React  from 'react';
+import React, {useEffect, useState} from 'react'
 import { connect } from 'react-redux';
 import { Routes, Route, Link, useLocation, useNavigate, withRouter, useParams, NavLink} from "react-router-dom"
 
@@ -7,14 +7,21 @@ function AnsweredPage(props) {
 
      const { id } = useParams()
      const { questions, users, authenticatedUser } = props;
+     const navigate = useNavigate();
 
      const question = questions[id];
-     const author = users[question.author];
+
+     useEffect(() => {
+        if(!question || !author) {
+            navigate('/error')
+        }
+    }, [id, question, navigate])
 
      if (!question) {
-        navigate('/error');
         return null;
     }
+
+     const author = users[question.author];
 
      const checkVoteOptionOne = question.optionOne.votes.includes(authenticatedUser) ?
                     <span className="badge rounded-pill bg-info ms-2">Your answer</span> :

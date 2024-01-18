@@ -17,8 +17,14 @@ function UnansweredPage(props) {
 
         const question = questions[id]
 
+
+        useEffect(() => {
+            if(!question || !author) {
+                navigate('/error')
+            }
+        }, [id, question, navigate])
+
         if (!question) {
-            navigate('/error');
             return null;
         }
 
